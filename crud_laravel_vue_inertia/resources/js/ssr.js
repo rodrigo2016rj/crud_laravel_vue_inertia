@@ -4,7 +4,7 @@ import {createInertiaApp} from "@inertiajs/vue3";
 import createServer from "@inertiajs/vue3/server";
 
 /* Coloque uma tag title no seu inertia.blade.php */
-const titulo_do_sistema = window.document.getElementsByTagName("title")[0].innerText;
+const titulo_do_sistema = document.getElementsByTagName("title")[0].innerText;
 
 createServer((page) =>
   createInertiaApp({

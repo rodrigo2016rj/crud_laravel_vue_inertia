@@ -65,7 +65,7 @@ npm run build_ssr para criar a build client-side e a build server-side (não rec
 <p>Observação: Não recomendo criar nem utilizar a build server-side, pois não terá a variável global window.<br/>
 Se mesmo assim você deseja utilizar o "Node-based Inertia SSR server", os comandos são:<br/>
 npm run build_ssr<br/>
-php artisan inertia:start-ssr.</p>
+php artisan inertia:start-ssr</p>
 
 <p>Aviso importante: Caso tenha utilizado o comando npm run build_ssr e queira voltar a utilizar somente a build client-side, delete o diretório: crud_laravel_vue_inertia\bootstrap\ssr.</p>
 

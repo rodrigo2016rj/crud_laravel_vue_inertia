@@ -316,7 +316,7 @@ final class CadastrarPessoaController extends TemplateLayoutController{
     $quantidade_de_arrobas = substr_count($email, '@');
     if($quantidade_de_arrobas > 1){
       $mensagem = 'A pessoa não foi cadastrada.';
-      $mensagem .= ' O campo e-mail da pessoa precisa ter somente um caracter @.';
+      $mensagem .= ' O campo e-mail da pessoa precisa ter somente um caractere @.';
       $sessao->put('mensagem_da_pagina_cadastrar_pessoa', $mensagem);
       $sessao->save();
       $this->carregar_pagina(true);
@@ -324,7 +324,7 @@ final class CadastrarPessoaController extends TemplateLayoutController{
     }
     if($quantidade_de_arrobas < 1){
       $mensagem = 'A pessoa não foi cadastrada.';
-      $mensagem .= ' O campo e-mail da pessoa precisa ter pelo menos um caracter @.';
+      $mensagem .= ' O campo e-mail da pessoa precisa ter pelo menos um caractere @.';
       $sessao->put('mensagem_da_pagina_cadastrar_pessoa', $mensagem);
       $sessao->save();
       $this->carregar_pagina(true);
