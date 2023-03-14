@@ -40,7 +40,7 @@
         ultimo_valor_do_campo_filtro_cpf: "",
         mostrar_calendario_do_campo_filtro_data_de_nascimento: false,
         status_da_busca: "",
-        contador_de_filtro: 0,
+        contador_ajax: 0,
         
         lista_de_paginas: new Array(0),
         
@@ -407,13 +407,13 @@
       cadastrar(evento){
         this.remover_foco_do_botao(evento);
         
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Atualizando...";
         
         this.mensagem_cadastrar_pessoa = "Aguarde...";
         this.tipo_da_mensagem_cadastrar_pessoa = null;
         
-        const numero_desta_acao_filtrar = this.contador_de_filtro;
+        const numero_desta_acao_ajax = this.contador_ajax;
         
         /* Requisição ajax */
         let conexao_ajax = null;
@@ -437,33 +437,32 @@
           if(conexao_ajax.readyState == 4){
             if(conexao_ajax.status == 200){
               resposta = JSON.parse(conexao_ajax.responseText);
-              if(typeof resposta.mensagem_de_falha != "undefined"){
-                this.mensagem_cadastrar_pessoa = resposta.mensagem_de_falha;
-                this.tipo_da_mensagem_cadastrar_pessoa = "mensagem_de_falha";
-                this.status_da_busca = "";
-                return;
-              }
-              if(typeof resposta.mensagem_de_sucesso != "undefined"){
-                this.mensagem_cadastrar_pessoa = resposta.mensagem_de_sucesso;
-                this.tipo_da_mensagem_cadastrar_pessoa = "mensagem_de_sucesso";
-                
-                this.cadastrar_nome = "";
-                this.cadastrar_sobrenome = "";
-                this.cadastrar_cpf = "";
-                this.cadastrar_data_de_nascimento = "";
-                this.cadastrar_sexo = "";
-                this.cadastrar_setor = "";
-                this.cadastrar_email = "";
-                this.cadastrar_telefone_fixo = "";
-                this.cadastrar_telefone_movel = "";
-                this.cadastrar_telefone_estrangeiro = ""; 
-              }
-              if(numero_desta_acao_filtrar >= this.contador_de_filtro){
-                this.tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
-                this.tudo_em_um.sexos = resposta.sexos;
-                this.tudo_em_um.setores = resposta.setores;
-                
-                this.criar_lista_de_paginas();
+              if(numero_desta_acao_ajax >= this.contador_ajax){
+                if(typeof resposta.mensagem_de_falha != "undefined"){
+                  this.mensagem_cadastrar_pessoa = resposta.mensagem_de_falha;
+                  this.tipo_da_mensagem_cadastrar_pessoa = "mensagem_de_falha";
+                }
+                if(typeof resposta.mensagem_de_sucesso != "undefined"){
+                  this.mensagem_cadastrar_pessoa = resposta.mensagem_de_sucesso;
+                  this.tipo_da_mensagem_cadastrar_pessoa = "mensagem_de_sucesso";
+                  
+                  this.cadastrar_nome = "";
+                  this.cadastrar_sobrenome = "";
+                  this.cadastrar_cpf = "";
+                  this.cadastrar_data_de_nascimento = "";
+                  this.cadastrar_sexo = "";
+                  this.cadastrar_setor = "";
+                  this.cadastrar_email = "";
+                  this.cadastrar_telefone_fixo = "";
+                  this.cadastrar_telefone_movel = "";
+                  this.cadastrar_telefone_estrangeiro = "";
+                  
+                  this.tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
+                  this.tudo_em_um.sexos = resposta.sexos;
+                  this.tudo_em_um.setores = resposta.setores;
+                  
+                  this.criar_lista_de_paginas();
+                }
                 
                 this.status_da_busca = "";
               }
@@ -546,7 +545,7 @@
         this.filtrar();
       },
       filtrar(){
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Buscando...";
         this.pagina_selecionada = 1;
         
@@ -555,7 +554,7 @@
       limpar(evento){
         this.remover_foco_do_botao(evento);
         
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Limpando...";
         this.tudo_em_um.lista_de_pessoas.filtro_nome = "";
         this.tudo_em_um.lista_de_pessoas.filtro_cpf = "";
@@ -573,14 +572,14 @@
         const href = evento.currentTarget.getAttribute("href");
         const pagina = href.replace("/tudo_em_um?pagina=", "");
         
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Mudando de página...";
         this.pagina_selecionada = pagina;
         
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_nome_completo(evento){
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
         switch(this.tudo_em_um.lista_de_pessoas.ordenacao){
@@ -597,7 +596,7 @@
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_cpf(evento){
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
         switch(this.tudo_em_um.lista_de_pessoas.ordenacao){
@@ -614,7 +613,7 @@
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_setor(evento){
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
         switch(this.tudo_em_um.lista_de_pessoas.ordenacao){
@@ -631,7 +630,7 @@
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_contato(evento){
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
         switch(this.tudo_em_um.lista_de_pessoas.ordenacao){
@@ -648,7 +647,7 @@
         this.enviar_formulario_de_filtro();
       },
       enviar_formulario_de_filtro(){
-        const numero_desta_acao_filtrar = this.contador_de_filtro;
+        const numero_desta_acao_ajax = this.contador_ajax;
         const filtro_nome = this.tudo_em_um.lista_de_pessoas.filtro_nome;
         const filtro_cpf = this.tudo_em_um.lista_de_pessoas.filtro_cpf;
         const filtro_data_de_nascimento = this.tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
@@ -679,7 +678,7 @@
         conexao_ajax.onreadystatechange = function(){
           if(conexao_ajax.readyState == 4){
             if(conexao_ajax.status == 200){
-              if(numero_desta_acao_filtrar >= this.contador_de_filtro){
+              if(numero_desta_acao_ajax >= this.contador_ajax){
                 resposta = JSON.parse(conexao_ajax.responseText);
                 
                 this.tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
@@ -743,13 +742,13 @@
       editar(evento){
         this.remover_foco_do_botao(evento);
         
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Atualizando...";
         
         this.mensagem_editar_pessoa = "Aguarde...";
         this.tipo_da_mensagem_editar_pessoa = null;
         
-        const numero_desta_acao_filtrar = this.contador_de_filtro;
+        const numero_desta_acao_ajax = this.contador_ajax;
         const filtro_nome = this.tudo_em_um.lista_de_pessoas.filtro_nome;
         const filtro_cpf = this.tudo_em_um.lista_de_pessoas.filtro_cpf;
         const filtro_data_de_nascimento = this.tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
@@ -757,6 +756,8 @@
         const quantidade_por_pagina = this.tudo_em_um.lista_de_pessoas.quantidade_por_pagina;
         const ordenacao = this.tudo_em_um.lista_de_pessoas.ordenacao;
         const pagina = this.pagina_selecionada;
+        
+        const id_da_pessoa = this.id_da_pessoa_do_popup_editar;
         
         /* Requisição ajax */
         let conexao_ajax = null;
@@ -775,32 +776,34 @@
                           data_de_nascimento: this.editar_data_de_nascimento, sexo: this.editar_sexo,
                           id_do_setor: this.editar_setor, email: this.editar_email, 
                           telefone_fixo: this.editar_telefone_fixo, telefone_movel: this.editar_telefone_movel, 
-                          telefone_estrangeiro: this.editar_telefone_estrangeiro, 
-                          id_da_pessoa: this.id_da_pessoa_do_popup_editar};
+                          telefone_estrangeiro: this.editar_telefone_estrangeiro, id_da_pessoa: id_da_pessoa};
         let resposta = null;
         conexao_ajax.onreadystatechange = function(){
           if(conexao_ajax.readyState == 4){
             if(conexao_ajax.status == 200){
               resposta = JSON.parse(conexao_ajax.responseText);
-              if(typeof resposta.mensagem_de_falha != "undefined"){
-                this.mensagem_editar_pessoa = resposta.mensagem_de_falha;
-                this.tipo_da_mensagem_editar_pessoa = "mensagem_de_falha";
-                this.status_da_busca = "";
-                return;
-              }
-              if(typeof resposta.mensagem_de_sucesso != "undefined"){
-                this.mensagem_editar_pessoa = resposta.mensagem_de_sucesso;
-                this.tipo_da_mensagem_editar_pessoa = "mensagem_de_sucesso";
+              if(numero_desta_acao_ajax >= this.contador_ajax){
+                if(typeof resposta.mensagem_de_falha != "undefined"){
+                  if(id_da_pessoa === this.id_da_pessoa_do_popup_editar){
+                    this.mensagem_editar_pessoa = resposta.mensagem_de_falha;
+                    this.tipo_da_mensagem_editar_pessoa = "mensagem_de_falha";
+                  }
+                }
                 
-                if(numero_desta_acao_filtrar >= this.contador_de_filtro){
+                if(typeof resposta.mensagem_de_sucesso != "undefined"){
+                  if(id_da_pessoa === this.id_da_pessoa_do_popup_editar){
+                    this.mensagem_editar_pessoa = resposta.mensagem_de_sucesso;
+                    this.tipo_da_mensagem_editar_pessoa = "mensagem_de_sucesso";
+                  }
+                  
                   this.tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
                   this.tudo_em_um.sexos = resposta.sexos;
                   this.tudo_em_um.setores = resposta.setores;
                   
                   this.criar_lista_de_paginas();
-                  
-                  this.status_da_busca = "";
                 }
+                
+                this.status_da_busca = "";
               }
             }
           }
@@ -813,13 +816,13 @@
       excluir(evento){
         this.remover_foco_do_botao(evento);
         
-        this.contador_de_filtro++;
+        this.contador_ajax++;
         this.status_da_busca = "Atualizando...";
         
         this.mensagem_excluir_pessoa = "Aguarde...";
         this.tipo_da_mensagem_excluir_pessoa = null;
         
-        const numero_desta_acao_filtrar = this.contador_de_filtro;
+        const numero_desta_acao_ajax = this.contador_ajax;
         const filtro_nome = this.tudo_em_um.lista_de_pessoas.filtro_nome;
         const filtro_cpf = this.tudo_em_um.lista_de_pessoas.filtro_cpf;
         const filtro_data_de_nascimento = this.tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
@@ -827,6 +830,8 @@
         const quantidade_por_pagina = this.tudo_em_um.lista_de_pessoas.quantidade_por_pagina;
         const ordenacao = this.tudo_em_um.lista_de_pessoas.ordenacao;
         const pagina = this.pagina_selecionada;
+        
+        const id_da_pessoa = this.id_da_pessoa_do_popup_excluir;
         
         /* Requisição ajax */
         let conexao_ajax = null;
@@ -841,31 +846,34 @@
         let dados_post = {filtro_nome: filtro_nome, filtro_cpf: filtro_cpf, 
                           filtro_data_de_nascimento: filtro_data_de_nascimento, filtro_id_do_setor: filtro_id_do_setor, 
                           quantidade_por_pagina: quantidade_por_pagina, pagina: pagina, ordenacao: ordenacao, 
-                          id_da_pessoa: this.id_da_pessoa_do_popup_excluir};
+                          id_da_pessoa: id_da_pessoa};
         let resposta = null;
         conexao_ajax.onreadystatechange = function(){
           if(conexao_ajax.readyState == 4){
             if(conexao_ajax.status == 200){
               resposta = JSON.parse(conexao_ajax.responseText);
-              if(typeof resposta.mensagem_de_falha != "undefined"){
-                this.mensagem_excluir_pessoa = resposta.mensagem_de_falha;
-                this.tipo_da_mensagem_excluir_pessoa = "mensagem_de_falha";
-                this.status_da_busca = "";
-                return;
-              }
-              if(typeof resposta.mensagem_de_sucesso != "undefined"){
-                this.mensagem_excluir_pessoa = resposta.mensagem_de_sucesso;
-                this.tipo_da_mensagem_excluir_pessoa = "mensagem_de_sucesso";
+              if(numero_desta_acao_ajax >= this.contador_ajax){
+                if(typeof resposta.mensagem_de_falha != "undefined"){
+                  if(id_da_pessoa === this.id_da_pessoa_do_popup_excluir){
+                    this.mensagem_excluir_pessoa = resposta.mensagem_de_falha;
+                    this.tipo_da_mensagem_excluir_pessoa = "mensagem_de_falha";
+                  }
+                }
                 
-                if(numero_desta_acao_filtrar >= this.contador_de_filtro){
+                if(typeof resposta.mensagem_de_sucesso != "undefined"){
+                  if(id_da_pessoa === this.id_da_pessoa_do_popup_excluir){
+                    this.mensagem_excluir_pessoa = resposta.mensagem_de_sucesso;
+                    this.tipo_da_mensagem_excluir_pessoa = "mensagem_de_sucesso";
+                  }
+                  
                   this.tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
                   this.tudo_em_um.sexos = resposta.sexos;
                   this.tudo_em_um.setores = resposta.setores;
                   
                   this.criar_lista_de_paginas();
-                  
-                  this.status_da_busca = "";
                 }
+                
+                this.status_da_busca = "";
               }
             }
           }
