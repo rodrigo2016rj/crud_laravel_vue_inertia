@@ -61,7 +61,7 @@ export default{
       <span>CRUD Laravel Vue Inertia</span>
     </h1>
     <nav id="nav_menu_do_sistema_template">
-      <div id="div_opcoes_do_menu_do_sistema">
+      <div id="div_opcoes_do_menu_do_sistema_template">
         <a id="link_inicio_template" class="opcao_do_menu_do_sistema" href="/inicio">Início</a>
         <a id="link_cadastrar_template" class="opcao_do_menu_do_sistema" href="/cadastrar_pessoa">Cadastrar</a>
         <a id="link_listar_template" class="opcao_do_menu_do_sistema" href="/listar_pessoas">Listar</a>
