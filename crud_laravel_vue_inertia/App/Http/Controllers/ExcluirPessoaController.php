@@ -18,7 +18,7 @@ final class ExcluirPessoaController extends TemplateLayoutController{
     $excluir_pessoa_model = new ExcluirPessoaModel();
     $sessao = session();
 
-    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Blade */
+    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Vue */
     $valores['excluir_pessoa']['mensagem'] = '';
     $valores['excluir_pessoa']['tipo_de_mensagem'] = 'sucesso';
     $valores['excluir_pessoa']['id_valido'] = true;

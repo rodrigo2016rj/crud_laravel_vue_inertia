@@ -43,7 +43,7 @@ final class ListarPessoasController extends TemplateLayoutController{
     $quantidades_por_pagina['75'] = '75';
     $quantidades_por_pagina['100'] = '100';
 
-    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Blade */
+    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Vue */
     $valores['listar_pessoas']['setores'] = $array_setores;
     $valores['listar_pessoas']['quantidades_por_pagina'] = $quantidades_por_pagina;
     $valores['listar_pessoas']['lista_de_pessoas'] = $this->mostrar_pessoas();

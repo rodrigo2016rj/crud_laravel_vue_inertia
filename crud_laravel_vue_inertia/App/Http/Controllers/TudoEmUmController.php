@@ -36,7 +36,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $quantidades_por_pagina['75'] = '75';
     $quantidades_por_pagina['100'] = '100';
 
-    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Blade */
+    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Vue */
     $valores['tudo_em_um']['setores'] = $array_setores;
     $valores['tudo_em_um']['quantidades_por_pagina'] = $quantidades_por_pagina;
     $valores['tudo_em_um']['sexos'] = $pessoa->enum_sexo();

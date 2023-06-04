@@ -13,7 +13,7 @@ final class PessoaController extends TemplateLayoutController{
     $valores = $this->valores_do_template_layout();
     $pessoa_model = new PessoaModel();
 
-    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Blade */
+    /* Colocando valores iniciais nas variáveis para não ficarem undefined no Vue */
     $valores['pessoa']['mensagem'] = '';
     $valores['pessoa']['tipo_de_mensagem'] = 'sucesso';
     $valores['pessoa']['id_valido'] = true;
