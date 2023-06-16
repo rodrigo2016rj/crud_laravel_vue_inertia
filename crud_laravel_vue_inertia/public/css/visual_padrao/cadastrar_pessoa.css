@@ -5,7 +5,7 @@
   width: calc(820px - 10px - 10px);
   max-width: calc(100% - 10px - 10px);
 }
-@media only screen and (max-device-width: 640px){
+@media(max-width: 640px){
   #div_pagina_cadastrar_pessoa{
     padding: 15px 10px 10px 10px;
   }
@@ -23,7 +23,7 @@
   max-width: 100%;
   text-align: justify;
 }
-@media only screen and (max-device-width: 640px){
+@media(max-width: 640px){
   #div_mensagem{
     margin-top: 20px;
   }
@@ -43,7 +43,7 @@
   width: 400px;
   max-width: 100%;
 }
-@media only screen and (max-device-width: 640px){
+@media(max-width: 640px){
   #form_cadastrar{
     margin-top: 20px;
   }
@@ -148,7 +148,7 @@
   background-color: #F0F0FF;
   z-index: 1;
 }
-@media only screen and (max-device-width: 380px){
+@media(max-width: 380px){
   #div_calendario{
     left: calc(50% - 348px / 2);
   }

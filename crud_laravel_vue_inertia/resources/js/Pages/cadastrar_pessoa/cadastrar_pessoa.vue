@@ -21,7 +21,10 @@
         mostrar_calendario_do_campo_data_de_nascimento: false,
         id_do_setor_da_descricao: null,
         posicao_x_da_descricao_do_setor: 0,
-        posicao_y_da_descricao_do_setor: 0
+        posicao_y_da_descricao_do_setor: 0,
+        
+        rolagem_horizontal_da_janela: 0,
+        rolagem_vertical_da_janela: 0
       }
     },
     created(){
@@ -59,6 +62,21 @@
           
           tag_alvo = tag_alvo.parentNode;
         }
+      }.bind(this));
+      
+      window.addEventListener("resize", function(evento){
+        this.rolagem_horizontal_da_janela = window.scrollX;
+        this.rolagem_vertical_da_janela = window.scrollY;
+        if(!isNaN(this.id_do_setor_da_descricao) 
+           && this.id_do_setor_da_descricao % 1 == 0 
+           && this.id_do_setor_da_descricao > 0){
+          this.id_do_setor_da_descricao = "reposicionar";
+        }
+      }.bind(this));
+      
+      window.addEventListener("scroll", function(evento){
+        this.rolagem_horizontal_da_janela = window.scrollX;
+        this.rolagem_vertical_da_janela = window.scrollY;
       }.bind(this));
     },
     methods: {
@@ -345,8 +363,8 @@
               return;
             }
             
-            let posicao_x = caixa_de_selecao_setor.getBoundingClientRect().left + window.scrollX;
-            let posicao_y = caixa_de_selecao_setor.getBoundingClientRect().top + window.scrollY;
+            let posicao_x = caixa_de_selecao_setor.getBoundingClientRect().left + this.rolagem_horizontal_da_janela;
+            let posicao_y = caixa_de_selecao_setor.getBoundingClientRect().top + this.rolagem_vertical_da_janela;
             
             var estilo_computado = window.getComputedStyle(caixa_de_selecao_setor);
             posicao_x += parseInt(estilo_computado.width, 10);
@@ -362,6 +380,25 @@
     },
     watch: {
       id_do_setor_da_descricao(valor_atual, valor_anterior) {
+        if(valor_atual === "reposicionar"){
+          const caixa_de_selecao_setor = document.getElementById("caixa_de_selecao_setor");
+          
+          let posicao_x = caixa_de_selecao_setor.getBoundingClientRect().left + this.rolagem_horizontal_da_janela;
+          let posicao_y = caixa_de_selecao_setor.getBoundingClientRect().top + this.rolagem_vertical_da_janela;
+          
+          var estilo_computado = window.getComputedStyle(caixa_de_selecao_setor);
+          posicao_x += parseInt(estilo_computado.width, 10);
+          posicao_x += 10;
+          
+          posicao_y += parseInt(estilo_computado.height, 10) / 2;
+          
+          this.posicao_x_da_descricao_do_setor = posicao_x;
+          this.posicao_y_da_descricao_do_setor = posicao_y;
+          
+          valor_atual = valor_anterior;
+          this.id_do_setor_da_descricao = valor_atual;
+        }
+        
         const descricoes_dos_setores = document.getElementsByClassName("descricao_do_setor");
         for(let i = 0; i < descricoes_dos_setores.length; i++){
           descricoes_dos_setores[i].classList.add("tag_oculta");

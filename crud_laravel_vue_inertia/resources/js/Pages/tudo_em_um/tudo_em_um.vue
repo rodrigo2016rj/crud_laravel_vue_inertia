@@ -70,7 +70,10 @@
         cpf_da_pessoa_que_sera_excluida: "",
         nome_do_setor_da_pessoa_que_sera_excluida: "",
         mensagem_excluir_pessoa: "",
-        tipo_da_mensagem_excluir_pessoa: null
+        tipo_da_mensagem_excluir_pessoa: null,
+        
+        rolagem_horizontal_da_janela: 0,
+        rolagem_vertical_da_janela: 0
       }
     },
     created(){
@@ -129,6 +132,34 @@
           
           tag_alvo = tag_alvo.parentNode;
         }
+      }.bind(this));
+      
+      window.addEventListener("resize", function(evento){
+        this.rolagem_horizontal_da_janela = window.scrollX;
+        this.rolagem_vertical_da_janela = window.scrollY;
+        if(this.mostrar_popup_cadastrar_pessoa === true){
+          this.mostrar_popup_cadastrar_pessoa = "reposicionar";
+        }
+        if(!isNaN(this.id_da_pessoa_do_popup_visualizar) 
+           && this.id_da_pessoa_do_popup_visualizar % 1 == 0 
+           && this.id_da_pessoa_do_popup_visualizar > 0){
+          this.id_da_pessoa_do_popup_visualizar = "reposicionar";
+        }
+        if(!isNaN(this.id_da_pessoa_do_popup_editar) 
+           && this.id_da_pessoa_do_popup_editar % 1 == 0 
+           && this.id_da_pessoa_do_popup_editar > 0){
+          this.id_da_pessoa_do_popup_editar = "reposicionar";
+        }
+        if(!isNaN(this.id_da_pessoa_do_popup_excluir) 
+           && this.id_da_pessoa_do_popup_excluir % 1 == 0 
+           && this.id_da_pessoa_do_popup_excluir > 0){
+          this.id_da_pessoa_do_popup_excluir = "reposicionar";
+        }
+      }.bind(this));
+      
+      window.addEventListener("scroll", function(evento){
+        this.rolagem_horizontal_da_janela = window.scrollX;
+        this.rolagem_vertical_da_janela = window.scrollY;
       }.bind(this));
     },
     methods: {
@@ -1066,6 +1097,8 @@
       mostrar_popup_cadastrar_pessoa(valor_atual, valor_anterior){
         const div_cadastrar_pessoa = document.getElementById("div_cadastrar_pessoa");
         if(valor_atual === true || valor_atual === "reposicionar"){
+          this.mostrar_popup_cadastrar_pessoa = true;
+          
           div_cadastrar_pessoa.classList.remove("tag_oculta");
           
           this.mensagem_cadastrar_pessoa = "";
@@ -1098,9 +1131,12 @@
           altura_da_div += parseInt(estilo_computado.paddingBottom, 10);
           altura_da_div += parseInt(estilo_computado.borderBottomWidth, 10);
           
-          var posicao_y = window.scrollY + (window.innerHeight - altura_da_div) / 2;
+          var posicao_y = this.rolagem_vertical_da_janela + (window.innerHeight - altura_da_div) / 2;
           if(window.innerHeight <= altura_da_div){
-            posicao_y = this.posicao_y_do_link_cadastrar_pessoa + window.scrollY;
+            posicao_y = this.rolagem_vertical_da_janela + 2;
+            if(window.innerWidth <= largura_da_div){
+              posicao_y = this.posicao_y_do_link_cadastrar_pessoa + this.rolagem_vertical_da_janela;
+            }
           }
           
           div_cadastrar_pessoa.style.position = "absolute";
@@ -1155,9 +1191,12 @@
         altura_da_div += parseInt(estilo_computado.paddingBottom, 10);
         altura_da_div += parseInt(estilo_computado.borderBottomWidth, 10);
         
-        var posicao_y = window.scrollY + (window.innerHeight - altura_da_div) / 2;
+        var posicao_y = this.rolagem_vertical_da_janela + (window.innerHeight - altura_da_div) / 2;
         if(window.innerHeight <= altura_da_div){
-          posicao_y = this.posicao_y_do_link_nome_da_pessoa + window.scrollY;
+          posicao_y = this.rolagem_vertical_da_janela + 2;
+          if(window.innerWidth <= largura_da_div){
+            posicao_y = this.posicao_y_do_link_nome_da_pessoa + this.rolagem_vertical_da_janela;
+          }
         }
         
         div_visualizar_pessoa.style.position = "absolute";
@@ -1208,9 +1247,12 @@
         altura_da_div += parseInt(estilo_computado.paddingBottom, 10);
         altura_da_div += parseInt(estilo_computado.borderBottomWidth, 10);
         
-        var posicao_y = window.scrollY + (window.innerHeight - altura_da_div) / 2;
+        var posicao_y = this.rolagem_vertical_da_janela + (window.innerHeight - altura_da_div) / 2;
         if(window.innerHeight <= altura_da_div){
-          posicao_y = this.posicao_y_do_link_editar_pessoa + window.scrollY;
+          posicao_y = this.rolagem_vertical_da_janela + 2;
+          if(window.innerWidth <= largura_da_div){
+            posicao_y = this.posicao_y_do_link_editar_pessoa + this.rolagem_vertical_da_janela;
+          }
         }
         
         div_editar_pessoa.style.position = "absolute";
@@ -1261,9 +1303,12 @@
         altura_da_div += parseInt(estilo_computado.paddingBottom, 10);
         altura_da_div += parseInt(estilo_computado.borderBottomWidth, 10);
         
-        var posicao_y = this.posicao_y_do_link_excluir_pessoa + window.scrollY - altura_da_div / 2;
+        var posicao_y = this.posicao_y_do_link_excluir_pessoa + this.rolagem_vertical_da_janela - altura_da_div / 2;
         if(window.innerHeight <= altura_da_div){
-          posicao_y = this.posicao_y_do_link_excluir_pessoa + window.scrollY;
+          posicao_y = this.rolagem_vertical_da_janela + 2;
+        }
+        if(window.innerWidth <= largura_da_div){
+          posicao_y = this.posicao_y_do_link_excluir_pessoa + this.rolagem_vertical_da_janela;
         }
         
         div_excluir_pessoa.style.position = "absolute";
