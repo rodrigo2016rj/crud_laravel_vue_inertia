@@ -292,7 +292,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
 
     /* Validações */
-    if(empty($nome)){
+    if($nome === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O campo nome da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -318,7 +318,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_nome($nome);
 
-    if(empty($sobrenome)){
+    if($sobrenome === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O campo sobrenome da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -354,7 +354,7 @@ final class TudoEmUmController extends TemplateLayoutController{
       die;
     }
 
-    if(empty($cpf)){
+    if($cpf === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O campo CPF da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -380,7 +380,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_cpf($cpf);
 
-    if(empty($data_de_nascimento)){
+    if($data_de_nascimento === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O campo data de nascimento da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -419,7 +419,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_data_de_nascimento($data_de_nascimento);
 
-    if(empty($sexo)){
+    if($sexo === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O sexo precisa ser informado.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -459,7 +459,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_fk_setor($id_do_setor);
 
-    if(empty($email)){
+    if($email === ''){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' O campo e-mail da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -605,7 +605,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_pk_pessoa($id_da_pessoa);
 
-    if(empty($nome)){
+    if($nome === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O campo nome da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -631,7 +631,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_nome($nome);
 
-    if(empty($sobrenome)){
+    if($sobrenome === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O campo sobrenome da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -668,7 +668,7 @@ final class TudoEmUmController extends TemplateLayoutController{
       die;
     }
 
-    if(empty($cpf)){
+    if($cpf === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O campo CPF da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -695,7 +695,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_cpf($cpf);
 
-    if(empty($data_de_nascimento)){
+    if($data_de_nascimento === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O campo data de nascimento da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -734,7 +734,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_data_de_nascimento($data_de_nascimento);
 
-    if(empty($sexo)){
+    if($sexo === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O sexo precisa ser informado.';
       $retorno['mensagem_de_falha'] = $mensagem;
@@ -774,7 +774,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $pessoa->set_fk_setor($id_do_setor);
 
-    if(empty($email)){
+    if($email === ''){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' O campo e-mail da pessoa precisa ser preenchido.';
       $retorno['mensagem_de_falha'] = $mensagem;
