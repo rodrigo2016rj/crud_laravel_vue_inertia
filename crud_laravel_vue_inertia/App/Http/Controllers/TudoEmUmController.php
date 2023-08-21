@@ -238,7 +238,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     return $valores;
   }
 
-  public function mostrar_pessoas_ajax($mensagem_de_sucesso = ""){
+  public function mostrar_pessoas_ajax($mensagem_de_sucesso = ''){
     $pessoa = new Pessoa();
 
     $metodo = 'get';
@@ -250,7 +250,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $retorno['sexos'] = $pessoa->enum_sexo();
     $retorno['setores'] = $this->consultar_setores();
 
-    if($mensagem_de_sucesso !== ""){
+    if($mensagem_de_sucesso !== ''){
       $retorno['mensagem_de_sucesso'] = $mensagem_de_sucesso;
     }
 
