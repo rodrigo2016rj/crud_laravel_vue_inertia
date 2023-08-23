@@ -11,6 +11,8 @@ createInertiaApp({
     return pages[`./Pages/${name}.vue`];
   },
   setup({el, App, props, plugin}){
+    el.id = "div_app_template";
+    delete el.dataset.page;
     return createApp({render: () => h(App, props)}).use(plugin).mount(el);
   }
 });
