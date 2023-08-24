@@ -1095,10 +1095,14 @@
     },
     watch: {
       mostrar_popup_cadastrar_pessoa(valor_atual, valor_anterior){
-        const div_cadastrar_pessoa = document.getElementById("div_cadastrar_pessoa");
-        if(valor_atual === true || valor_atual === "reposicionar"){
+        if(valor_atual === "reposicionar"){
+          /* Aciona o watch novamente */
           this.mostrar_popup_cadastrar_pessoa = true;
-          
+          return;
+        }
+        
+        const div_cadastrar_pessoa = document.getElementById("div_cadastrar_pessoa");
+        if(valor_atual === true){
           div_cadastrar_pessoa.classList.remove("tag_oculta");
           
           this.mensagem_cadastrar_pessoa = "";
