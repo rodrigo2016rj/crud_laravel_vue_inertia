@@ -14,12 +14,20 @@ export default{
     }
   },
   mounted(){
-    /* Ajustando altura do tronco para preencher a parte vertical visível da tela. */
     const body = document.getElementsByTagName("body")[0];
+    const div_app_template = document.getElementById("div_app_template");
     const div_cabecalho_template = document.getElementById("div_cabecalho_template");
     const div_tronco_template = document.getElementById("div_tronco_template");
     
+    /* O resize_observer é importante no Vue para detectar quando as larguras e alturas deixarão de ser automáticas. */
     const resize_observer = new ResizeObserver(function(){
+      /* Enquanto as larguras e alturas forem automáticas não há como fazer ajustes, por isso retorna. */
+      var estilo_computado = window.getComputedStyle(div_app_template);
+      if(estilo_computado.height === "auto"){
+        return;
+      }
+      
+      /* Ajustando altura do tronco para preencher a parte vertical visível da tela. */
       let altura_minima = window.innerHeight;
       
       var estilo_computado = window.getComputedStyle(body);
@@ -46,7 +54,8 @@ export default{
       
       div_tronco_template.style.minHeight = altura_minima + "px";
     }.bind(this));
-    resize_observer.observe(div_cabecalho_template);
+    
+    resize_observer.observe(div_app_template);
   }
 }
 </script>
