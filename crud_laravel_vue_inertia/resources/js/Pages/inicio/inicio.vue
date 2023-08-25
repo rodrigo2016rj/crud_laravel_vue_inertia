@@ -12,6 +12,10 @@
     },
     data(){
       return{
+        /* Propriedades obtidas dos controllers precisam ser recolocadas para prevenir o cache do inertia */
+        vue_template_layout: this.template_layout,
+        
+        /* Propriedades novas e seus valores iniciais */
         endereco_do_arquivo_css: "/css/" + this.template_layout.visual_escolhido + "/inicio.css"
       }
     }
@@ -19,7 +23,7 @@
 </script>
 
 <template>
-  <TemplateLayout :template_layout="template_layout">
+  <TemplateLayout :template_layout="vue_template_layout">
     <template #conteudo>
       <div id="div_pagina_inicio">
         <h2 id="h2_titulo_da_pagina">

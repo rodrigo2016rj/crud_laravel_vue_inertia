@@ -15,6 +15,11 @@
     },
     data(){
       return{
+        /* Propriedades obtidas dos controllers precisam ser recolocadas para prevenir o cache do inertia */
+        vue_template_layout: this.template_layout,
+        vue_editar_pessoa: this.editar_pessoa,
+        
+        /* Propriedades novas e seus valores iniciais */
         endereco_do_arquivo_css: "/css/" + this.template_layout.visual_escolhido + "/editar_pessoa.css",
         
         ultimo_valor_campo_cpf: "",
@@ -30,14 +35,14 @@
     created(){
       /* Se o valor advindo do Laravel não for um dos valores possíveis, a caixa de seleção terá o valor default. */
       var valor_default_para_a_caixa_de_selecao = true;
-      for(let i = 0; i < this.editar_pessoa.setores.length; i++){
-        if(this.editar_pessoa.setores[i].id == this.editar_pessoa.id_do_setor){
+      for(let i = 0; i < this.vue_editar_pessoa.setores.length; i++){
+        if(this.vue_editar_pessoa.setores[i].id == this.vue_editar_pessoa.id_do_setor){
           valor_default_para_a_caixa_de_selecao = false;
           break;
         }
       }
       if(valor_default_para_a_caixa_de_selecao){
-        this.editar_pessoa.id_do_setor = "";
+        this.vue_editar_pessoa.id_do_setor = "";
       }
       
       window.addEventListener("click", function(evento){
@@ -131,7 +136,7 @@
         campo_cpf.setSelectionRange(posicao_do_cursor, posicao_do_cursor);
         
         this.ultimo_valor_campo_cpf = campo_cpf.value;
-        this.editar_pessoa.cpf = campo_cpf.value;
+        this.vue_editar_pessoa.cpf = campo_cpf.value;
       },
       colocar_borda_hover_no_campo(evento){
         let tag_alvo = evento.currentTarget;
@@ -245,7 +250,7 @@
         posicao_do_cursor += atualizacao_do_cursor;
         campo_telefone_fixo.setSelectionRange(posicao_do_cursor, posicao_do_cursor);
         
-        this.editar_pessoa.telefone_fixo = campo_telefone_fixo.value;
+        this.vue_editar_pessoa.telefone_fixo = campo_telefone_fixo.value;
       },
       aplicar_mascara_para_o_campo_telefone_movel(evento){
         evento.preventDefault();
@@ -336,7 +341,7 @@
         posicao_do_cursor += atualizacao_do_cursor;
         campo_telefone_movel.setSelectionRange(posicao_do_cursor, posicao_do_cursor);
         
-        this.editar_pessoa.telefone_movel = campo_telefone_movel.value;
+        this.vue_editar_pessoa.telefone_movel = campo_telefone_movel.value;
       },
       remover_popups(){
         this.mostrar_calendario_do_campo_data_de_nascimento = false;
@@ -436,14 +441,14 @@
 </script>
 
 <template>
-  <TemplateLayout :template_layout="template_layout">
+  <TemplateLayout :template_layout="vue_template_layout">
     <template #conteudo>
       <div id="div_pagina_editar_pessoa">
         <h2 id="h2_titulo_da_pagina">
           <span>Editar Pessoa</span>
         </h2>
-        <div id="div_mensagem" v-if="editar_pessoa.mensagem">
-          <span id="span_mensagem" :class="['mensagem_de_'+editar_pessoa.tipo_de_mensagem]">{{editar_pessoa.mensagem}}</span>
+        <div id="div_mensagem" v-if="vue_editar_pessoa.mensagem">
+          <span id="span_mensagem" :class="['mensagem_de_'+vue_editar_pessoa.tipo_de_mensagem]">{{vue_editar_pessoa.mensagem}}</span>
         </div>
         <form id="form_editar" method="post" action="/editar_pessoa/editar">
           <div id="div_legenda_do_form_editar">
@@ -458,7 +463,7 @@
               </label>
             </div>
             <div id="div_campo_nome">
-              <input type="text" id="campo_nome" name="nome" v-model="editar_pessoa.nome" autocomplete="off"/>
+              <input type="text" id="campo_nome" name="nome" v-model="vue_editar_pessoa.nome" autocomplete="off"/>
             </div>
           </div>
           <div id="div_editar_sobrenome">
@@ -469,7 +474,7 @@
               </label>
             </div>
             <div id="div_campo_sobrenome">
-              <input type="text" id="campo_sobrenome" name="sobrenome" v-model="editar_pessoa.sobrenome" 
+              <input type="text" id="campo_sobrenome" name="sobrenome" v-model="vue_editar_pessoa.sobrenome" 
                      autocomplete="off"/>
             </div>
           </div>
@@ -482,7 +487,7 @@
             </div>
             <div id="div_campo_cpf">
               <input type="text" id="campo_cpf" name="cpf" @keyup="aplicar_mascara_para_o_campo_cpf" 
-                     v-model="editar_pessoa.cpf" autocomplete="off"/>
+                     v-model="vue_editar_pessoa.cpf" autocomplete="off"/>
             </div>
           </div>
           <div id="div_editar_data_de_nascimento">
@@ -494,7 +499,7 @@
             </div>
             <div id="div_campo_data_de_nascimento">
               <input type="text" id="campo_data_de_nascimento" name="data_de_nascimento" 
-                     v-model="editar_pessoa.data_de_nascimento" @mouseenter="colocar_borda_hover_no_campo" 
+                     v-model="vue_editar_pessoa.data_de_nascimento" @mouseenter="colocar_borda_hover_no_campo" 
                      @mouseleave="colocar_borda_normal_no_campo" autocomplete="off"/>
               <span id="span_icone_de_calendario_do_campo_data_de_nascimento" @mouseenter="colocar_borda_hover_no_campo" 
                     @mouseleave="colocar_borda_normal_no_campo" @mousedown="desfaz_selecao_de_texto" 
@@ -511,9 +516,9 @@
               </label>
             </div>
             <div id="div_lista_de_sexos">
-              <template v-for="(valor, chave) in editar_pessoa.sexos">
+              <template v-for="(valor, chave) in vue_editar_pessoa.sexos">
                 <label class="item_da_lista_de_sexos">
-                  <input type="radio" name="sexo" :value="chave" v-model="editar_pessoa.sexo" autocomplete="off"/>
+                  <input type="radio" name="sexo" :value="chave" v-model="vue_editar_pessoa.sexo" autocomplete="off"/>
                   <span>&nbsp;</span>
                   <span>{{valor}}</span>
                 </label>
@@ -528,13 +533,13 @@
               </label>
             </div>
             <div id="div_caixa_de_selecao_setor">
-              <select id="caixa_de_selecao_setor" name="id_do_setor" v-model="editar_pessoa.id_do_setor" 
+              <select id="caixa_de_selecao_setor" name="id_do_setor" v-model="vue_editar_pessoa.id_do_setor" 
                       @change="colocar_popup" autocomplete="off">
                 <option value="">Selecione</option>
-                <option v-for="(setor, chave) in editar_pessoa.setores" :value="setor.id">{{setor.nome}}</option>
+                <option v-for="(setor, chave) in vue_editar_pessoa.setores" :value="setor.id">{{setor.nome}}</option>
               </select>
               <div id="div_descricoes_dos_setores" class="tag_oculta">
-                <template v-for="(setor, chave) in editar_pessoa.setores">
+                <template v-for="(setor, chave) in vue_editar_pessoa.setores">
                   <div :id="'div_descricao_do_setor_id_'+setor.id" class="descricao_do_setor tag_oculta">
                     <span>{{setor.descricao}}</span>
                   </div>
@@ -550,7 +555,7 @@
               </label>
             </div>
             <div id="div_campo_email">
-              <input type="text" id="campo_email" name="email" v-model="editar_pessoa.email" autocomplete="off"/>
+              <input type="text" id="campo_email" name="email" v-model="vue_editar_pessoa.email" autocomplete="off"/>
             </div>
           </div>
           <div id="div_editar_telefone_fixo">
@@ -560,7 +565,7 @@
               </label>
             </div>
             <div id="div_campo_telefone_fixo">
-              <input type="text" id="campo_telefone_fixo" name="telefone_fixo" v-model="editar_pessoa.telefone_fixo" 
+              <input type="text" id="campo_telefone_fixo" name="telefone_fixo" v-model="vue_editar_pessoa.telefone_fixo" 
                      @keyup="aplicar_mascara_para_o_campo_telefone_fixo" autocomplete="off"/>
             </div>
           </div>
@@ -571,7 +576,7 @@
               </label>
             </div>
             <div id="div_campo_telefone_movel">
-              <input type="text" id="campo_telefone_movel" name="telefone_movel" v-model="editar_pessoa.telefone_movel" 
+              <input type="text" id="campo_telefone_movel" name="telefone_movel" v-model="vue_editar_pessoa.telefone_movel" 
                      @keyup="aplicar_mascara_para_o_campo_telefone_movel" autocomplete="off"/>
             </div>
           </div>
@@ -583,12 +588,12 @@
             </div>
             <div id="div_campo_telefone_estrangeiro">
               <input type="text" id="campo_telefone_estrangeiro" name="telefone_estrangeiro" 
-                     v-model="editar_pessoa.telefone_estrangeiro" autocomplete="off"/>
+                     v-model="vue_editar_pessoa.telefone_estrangeiro" autocomplete="off"/>
             </div>
           </div>
           <div id="div_botao_editar">
-            <input type="hidden" name="_token" :value="template_layout.chave_anti_csrf"/>
-            <input type="hidden" id="campo_id_da_pessoa" name="id_da_pessoa" :value="editar_pessoa.id_da_pessoa"/>
+            <input type="hidden" name="_token" :value="vue_template_layout.chave_anti_csrf"/>
+            <input type="hidden" id="campo_id_da_pessoa" name="id_da_pessoa" :value="vue_editar_pessoa.id_da_pessoa"/>
             <input type="submit" id="botao_editar" @mouseleave="remover_foco_do_botao" @click="remover_foco_do_botao" 
                    value="Editar"/>
           </div>

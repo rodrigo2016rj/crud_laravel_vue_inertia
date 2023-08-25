@@ -10,6 +10,10 @@ export default{
   },
   data(){
     return{
+      /* Propriedades obtidas dos controllers precisam ser recolocadas para prevenir o cache do inertia */
+      vue_template_layout: this.template_layout,
+      
+      /* Propriedades novas e seus valores iniciais */
       endereco_do_arquivo_css: "/css/" + this.template_layout.visual_escolhido + "/template_layout.css"
     }
   },

@@ -15,6 +15,11 @@
     },
     data(){
       return{
+        /* Propriedades obtidas dos controllers precisam ser recolocadas para prevenir o cache do inertia */
+        vue_template_layout: this.template_layout,
+        vue_listar_pessoas: this.listar_pessoas,
+        
+        /* Propriedades novas e seus valores iniciais */
         endereco_do_arquivo_css: "/css/" + this.template_layout.visual_escolhido + "/listar_pessoas.css",
         
         pagina_selecionada: this.listar_pessoas.lista_de_pessoas.pagina_atual,
@@ -28,18 +33,18 @@
     created(){
       /* Se o valor advindo do Laravel não for um dos valores possíveis, a caixa de seleção terá o valor default. */
       var valor_default_para_a_caixa_de_selecao = true;
-      for(let i = 0; i < this.listar_pessoas.setores.length; i++){
-        if(this.listar_pessoas.setores[i].id == this.listar_pessoas.lista_de_pessoas.filtro_id_do_setor){
+      for(let i = 0; i < this.vue_listar_pessoas.setores.length; i++){
+        if(this.vue_listar_pessoas.setores[i].id == this.vue_listar_pessoas.lista_de_pessoas.filtro_id_do_setor){
           valor_default_para_a_caixa_de_selecao = false;
           break;
         }
       }
       if(valor_default_para_a_caixa_de_selecao){
-        this.listar_pessoas.lista_de_pessoas.filtro_id_do_setor = "";
+        this.vue_listar_pessoas.lista_de_pessoas.filtro_id_do_setor = "";
       }
       
-      if(Object.keys(this.listar_pessoas.quantidades_por_pagina).indexOf(this.listar_pessoas.lista_de_pessoas.quantidade_por_pagina.toString()) === -1){
-        this.listar_pessoas.lista_de_pessoas.quantidade_por_pagina = "padrao";
+      if(Object.keys(this.vue_listar_pessoas.quantidades_por_pagina).indexOf(this.vue_listar_pessoas.lista_de_pessoas.quantidade_por_pagina.toString()) === -1){
+        this.vue_listar_pessoas.lista_de_pessoas.quantidade_por_pagina = "padrao";
       }
       
       this.criar_lista_de_paginas();
@@ -68,9 +73,9 @@
     },
     methods: {
       criar_lista_de_paginas(){
-        const pagina_atual = this.listar_pessoas.lista_de_pessoas.pagina_atual;
+        const pagina_atual = this.vue_listar_pessoas.lista_de_pessoas.pagina_atual;
         const inicio_da_sequencia = Math.max(pagina_atual - 3, 1);
-        const final_da_sequencia = Math.min(pagina_atual + 3, this.listar_pessoas.lista_de_pessoas.ultima_pagina);
+        const final_da_sequencia = Math.min(pagina_atual + 3, this.vue_listar_pessoas.lista_de_pessoas.ultima_pagina);
         const lista_de_paginas = new Array(0);
         
         if(inicio_da_sequencia != 1){
@@ -81,7 +86,7 @@
           lista_de_paginas.push(pagina);
         }
         
-        if(final_da_sequencia != this.listar_pessoas.lista_de_pessoas.ultima_pagina){
+        if(final_da_sequencia != this.vue_listar_pessoas.lista_de_pessoas.ultima_pagina){
           lista_de_paginas.push("...");
         }
         
@@ -138,7 +143,7 @@
         campo_filtro_cpf.setSelectionRange(posicao_do_cursor, posicao_do_cursor);
         
         this.ultimo_valor_campo_filtro_cpf = campo_filtro_cpf.value;
-        this.listar_pessoas.lista_de_pessoas.filtro_cpf = campo_filtro_cpf.value;
+        this.vue_listar_pessoas.lista_de_pessoas.filtro_cpf = campo_filtro_cpf.value;
       },
       colocar_borda_hover_no_campo(evento){
         let tag_alvo = evento.currentTarget;
@@ -174,52 +179,52 @@
         
         let quantidade_nao_enviada = 0;
         
-        if(this.listar_pessoas.lista_de_pessoas.filtro_nome == ""){
+        if(this.vue_listar_pessoas.lista_de_pessoas.filtro_nome == ""){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "filtro_nome");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.filtro_nome);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.filtro_nome);
           elemento_formulario.appendChild(elemento_campo);
         }
-        if(this.listar_pessoas.lista_de_pessoas.filtro_cpf == ""){
+        if(this.vue_listar_pessoas.lista_de_pessoas.filtro_cpf == ""){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "filtro_cpf");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.filtro_cpf);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.filtro_cpf);
           elemento_formulario.appendChild(elemento_campo);
         }
-        if(this.listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento == ""){
+        if(this.vue_listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento == ""){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "filtro_data_de_nascimento");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento);
           elemento_formulario.appendChild(elemento_campo);
         }
-        if(this.listar_pessoas.lista_de_pessoas.filtro_id_do_setor == ""){
+        if(this.vue_listar_pessoas.lista_de_pessoas.filtro_id_do_setor == ""){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "filtro_id_do_setor");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.filtro_id_do_setor);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.filtro_id_do_setor);
           elemento_formulario.appendChild(elemento_campo);
         }
-        if(this.listar_pessoas.lista_de_pessoas.quantidade_por_pagina == "padrao"){
+        if(this.vue_listar_pessoas.lista_de_pessoas.quantidade_por_pagina == "padrao"){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "quantidade_por_pagina");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.quantidade_por_pagina);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.quantidade_por_pagina);
           elemento_formulario.appendChild(elemento_campo);
         }
-        if(this.listar_pessoas.lista_de_pessoas.ordenacao == "padrao"){
+        if(this.vue_listar_pessoas.lista_de_pessoas.ordenacao == "padrao"){
           quantidade_nao_enviada++;
         }else{
           var elemento_campo = document.createElement("input");
           elemento_campo.setAttribute("name", "ordenacao");
-          elemento_campo.setAttribute("value", this.listar_pessoas.lista_de_pessoas.ordenacao);
+          elemento_campo.setAttribute("value", this.vue_listar_pessoas.lista_de_pessoas.ordenacao);
           elemento_formulario.appendChild(elemento_campo);
         }
         if(this.pagina_selecionada == null){
@@ -266,60 +271,60 @@
       },
       ordenar_por_nome_completo(evento){
         this.pagina_selecionada = null;
-        switch(this.listar_pessoas.lista_de_pessoas.ordenacao){
+        switch(this.vue_listar_pessoas.lista_de_pessoas.ordenacao){
           case "nome_completo_a_z":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "nome_completo_z_a";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "nome_completo_z_a";
             break;
           case "nome_completo_z_a":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
             break;
           default:
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "nome_completo_a_z";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "nome_completo_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_cpf(evento){
         this.pagina_selecionada = null;
-        switch(this.listar_pessoas.lista_de_pessoas.ordenacao){
+        switch(this.vue_listar_pessoas.lista_de_pessoas.ordenacao){
           case "cpf_crescente":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "cpf_decrescente";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "cpf_decrescente";
             break;
           case "cpf_decrescente":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
             break;
           default:
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "cpf_crescente";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "cpf_crescente";
             break;
         }
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_setor(evento){
         this.pagina_selecionada = null;
-        switch(this.listar_pessoas.lista_de_pessoas.ordenacao){
+        switch(this.vue_listar_pessoas.lista_de_pessoas.ordenacao){
           case "setor_a_z":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "setor_z_a";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "setor_z_a";
             break;
           case "setor_z_a":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
             break;
           default:
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "setor_a_z";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "setor_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
       },
       ordenar_por_contato(evento){
         this.pagina_selecionada = null;
-        switch(this.listar_pessoas.lista_de_pessoas.ordenacao){
+        switch(this.vue_listar_pessoas.lista_de_pessoas.ordenacao){
           case "contato_a_z":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "contato_z_a";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "contato_z_a";
             break;
           case "contato_z_a":
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "padrao";
             break;
           default:
-            this.listar_pessoas.lista_de_pessoas.ordenacao = "contato_a_z";
+            this.vue_listar_pessoas.lista_de_pessoas.ordenacao = "contato_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
@@ -345,7 +350,7 @@
 </script>
 
 <template>
-  <TemplateLayout :template_layout="template_layout">
+  <TemplateLayout :template_layout="vue_template_layout">
     <template #conteudo>
       <div id="div_pagina_listar_pessoas">
         <h2 id="h2_titulo_da_pagina">
@@ -371,7 +376,7 @@
             </div>
             <div id="div_campo_filtro_nome">
               <input type="text" id="campo_filtro_nome" name="filtro_nome" autocomplete="off"
-                     v-model="listar_pessoas.lista_de_pessoas.filtro_nome" placeholder="Parte do nome"/>
+                     v-model="vue_listar_pessoas.lista_de_pessoas.filtro_nome" placeholder="Parte do nome"/>
             </div>
           </div>
           <div id="div_filtro_cpf">
@@ -383,7 +388,7 @@
             <div id="div_campo_filtro_cpf">
               <input type="text" id="campo_filtro_cpf" name="filtro_cpf" autocomplete="off"
                      @keyup="aplicar_mascara_para_o_campo_filtro_cpf" 
-                     v-model="listar_pessoas.lista_de_pessoas.filtro_cpf" placeholder="CPF completo"/>
+                     v-model="vue_listar_pessoas.lista_de_pessoas.filtro_cpf" placeholder="CPF completo"/>
             </div>
           </div>
           <div id="div_filtro_data_de_nascimento">
@@ -394,7 +399,7 @@
             </div>
             <div id="div_campo_filtro_data_de_nascimento">
               <input type="text" id="campo_filtro_data_de_nascimento" name="filtro_data_de_nascimento" 
-                     autocomplete="off" v-model="listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento" 
+                     autocomplete="off" v-model="vue_listar_pessoas.lista_de_pessoas.filtro_data_de_nascimento" 
                      @mouseenter="colocar_borda_hover_no_campo" @mouseleave="colocar_borda_normal_no_campo" 
                      placeholder="dia/mês/ano"/>
               <span id="span_icone_de_calendario_do_campo_filtro_data_de_nascimento" 
@@ -412,9 +417,9 @@
             </div>
             <div id="div_caixa_de_selecao_filtro_setor">
               <select id="caixa_de_selecao_filtro_setor" name="filtro_id_do_setor" autocomplete="off" 
-                      v-model="listar_pessoas.lista_de_pessoas.filtro_id_do_setor">
+                      v-model="vue_listar_pessoas.lista_de_pessoas.filtro_id_do_setor">
                 <option value="">Selecione</option>
-                <option v-for="(setor, chave) in listar_pessoas.setores" :value="setor.id">{{setor.nome}}</option>
+                <option v-for="(setor, chave) in vue_listar_pessoas.setores" :value="setor.id">{{setor.nome}}</option>
               </select>
             </div>
           </div>
@@ -426,14 +431,14 @@
             </div>
             <div id="div_caixa_de_selecao_quantidade_por_pagina">
               <select id="caixa_de_selecao_quantidade_por_pagina" name="quantidade_por_pagina" autocomplete="off" 
-                      v-model="listar_pessoas.lista_de_pessoas.quantidade_por_pagina">
+                      v-model="vue_listar_pessoas.lista_de_pessoas.quantidade_por_pagina">
                 <option value="padrao">Selecione</option>
-                <option v-for="(valor, chave) in listar_pessoas.quantidades_por_pagina" :value="chave">{{valor}}</option>
+                <option v-for="(valor, chave) in vue_listar_pessoas.quantidades_por_pagina" :value="chave">{{valor}}</option>
               </select>
             </div>
           </div>
           <div id="div_botoes_dos_filtros">
-            <input type="hidden" id="campo_ordenacao" name="ordenacao" :value="listar_pessoas.lista_de_pessoas.ordenacao"/>
+            <input type="hidden" id="campo_ordenacao" name="ordenacao" :value="vue_listar_pessoas.lista_de_pessoas.ordenacao"/>
             <input type="submit" id="botao_buscar" @mouseleave="remover_foco_do_botao" @click="buscar" value="Buscar"/>
             <input type="reset" id="botao_limpar" @mouseleave="remover_foco_do_botao" @click="redirecionar_sem_filtros" 
                    value="Limpar"/>
@@ -443,48 +448,48 @@
           <h3 id="h3_titulo_da_lista_de_pessoas">
             <span>Lista</span>
           </h3>
-          <div v-if="listar_pessoas.lista_de_pessoas.pagina_atual" id="div_paginacao_de_cima_da_lista_de_pessoas">
+          <div v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual" id="div_paginacao_de_cima_da_lista_de_pessoas">
             <a class="primeira_pagina" href="/listar_pessoas?pagina=1" @click="mudar_pagina">Primeira</a>
             <span>&nbsp;</span>
-            <a v-if="listar_pessoas.lista_de_pessoas.pagina_atual > 1" class="pagina_anterior" @click="mudar_pagina" 
-               :href="'/listar_pessoas?pagina=' + (listar_pessoas.lista_de_pessoas.pagina_atual - 1)">Anterior</a>
+            <a v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual > 1" class="pagina_anterior" @click="mudar_pagina" 
+               :href="'/listar_pessoas?pagina=' + (vue_listar_pessoas.lista_de_pessoas.pagina_atual - 1)">Anterior</a>
             <a v-else class="pagina_anterior" href="/listar_pessoas?pagina=1" @click="mudar_pagina">Anterior</a>
             <span>&nbsp;</span>
             <template v-for="pagina in lista_de_paginas">
               <span v-if="pagina === '...'">...</span>
-              <a v-else-if="pagina == listar_pessoas.lista_de_pessoas.pagina_atual" class="pagina_selecionada" 
+              <a v-else-if="pagina == vue_listar_pessoas.lista_de_pessoas.pagina_atual" class="pagina_selecionada" 
                  :href="'/listar_pessoas?pagina=' + pagina" @click="mudar_pagina">{{pagina}}</a>
               <a v-else class="pagina" :href="'/listar_pessoas?pagina=' + pagina" @click="mudar_pagina">{{pagina}}</a>
               <span>&nbsp;</span>
             </template>
-            <a v-if="listar_pessoas.lista_de_pessoas.pagina_atual < listar_pessoas.lista_de_pessoas.ultima_pagina" 
-               :href="'/listar_pessoas?pagina=' + (listar_pessoas.lista_de_pessoas.pagina_atual + 1)" 
+            <a v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual < vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
+               :href="'/listar_pessoas?pagina=' + (vue_listar_pessoas.lista_de_pessoas.pagina_atual + 1)" 
                class="pagina_seguinte" @click="mudar_pagina">Seguinte</a>
-            <a v-else :href="'/listar_pessoas?pagina=' + listar_pessoas.lista_de_pessoas.ultima_pagina" 
+            <a v-else :href="'/listar_pessoas?pagina=' + vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
                class="pagina_seguinte" @click="mudar_pagina">Seguinte</a>
             <span>&nbsp;</span>
-            <a :href="'/listar_pessoas?pagina=' + listar_pessoas.lista_de_pessoas.ultima_pagina" 
+            <a :href="'/listar_pessoas?pagina=' + vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
                class="ultima_pagina" @click="mudar_pagina">Última</a>
           </div>
           <div id="div_partes_da_lista_de_pessoas">
             <div id="div_parte_nome_da_lista_de_pessoas" class="parte_da_lista" @click="ordenar_por_nome_completo">
-              <span>Nome{{listar_pessoas.lista_de_pessoas.ordem_do_nome}}</span>
+              <span>Nome{{vue_listar_pessoas.lista_de_pessoas.ordem_do_nome}}</span>
             </div>
             <div id="div_parte_cpf_da_lista_de_pessoas" class="parte_da_lista" @click="ordenar_por_cpf">
-              <span>CPF{{listar_pessoas.lista_de_pessoas.ordem_do_cpf}}</span>
+              <span>CPF{{vue_listar_pessoas.lista_de_pessoas.ordem_do_cpf}}</span>
             </div>
             <div id="div_parte_setor_da_lista_de_pessoas" class="parte_da_lista" @click="ordenar_por_setor">
-              <span>Setor{{listar_pessoas.lista_de_pessoas.ordem_do_setor}}</span>
+              <span>Setor{{vue_listar_pessoas.lista_de_pessoas.ordem_do_setor}}</span>
             </div>
             <div id="div_parte_contato_da_lista_de_pessoas" class="parte_da_lista" @click="ordenar_por_contato">
-              <span>Contato{{listar_pessoas.lista_de_pessoas.ordem_do_contato}}</span>
+              <span>Contato{{vue_listar_pessoas.lista_de_pessoas.ordem_do_contato}}</span>
             </div>
             <div id="div_parte_opcoes_da_lista_de_pessoas" class="parte_da_lista">
               <span>Opções</span>
             </div>
           </div>
           <div id="div_lista_de_pessoas">
-            <template v-for="(pessoa, chave) in listar_pessoas.lista_de_pessoas.pessoas">
+            <template v-for="(pessoa, chave) in vue_listar_pessoas.lista_de_pessoas.pessoas">
               <div :class="['pessoa', (chave + 1) % 2 === 0 ? 'par' : 'impar']">
                 <div class="local_do_nome_da_pessoa">
                   <a :href="'pessoa?id=' + pessoa.id" class="nome_da_pessoa">{{pessoa.nome_completo}}</a>
@@ -519,31 +524,31 @@
                 </div>
               </div>
             </template>
-            <div v-if="listar_pessoas.lista_de_pessoas.pessoas.length === 0" id="div_mensagem_quando_nao_ha_pessoas">
+            <div v-if="vue_listar_pessoas.lista_de_pessoas.pessoas.length === 0" id="div_mensagem_quando_nao_ha_pessoas">
               <span id="span_mensagem_quando_nao_ha_pessoas">Nenhuma pessoa foi encontrada, limpe os filtros ou busque por outras informações.</span>
             </div>
           </div>
-          <div v-if="listar_pessoas.lista_de_pessoas.pagina_atual" id="div_paginacao_de_baixo_da_lista_de_pessoas">
+          <div v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual" id="div_paginacao_de_baixo_da_lista_de_pessoas">
             <a class="primeira_pagina" href="/listar_pessoas?pagina=1" @click="mudar_pagina">Primeira</a>
             <span>&nbsp;</span>
-            <a v-if="listar_pessoas.lista_de_pessoas.pagina_atual > 1" class="pagina_anterior" @click="mudar_pagina" 
-               :href="'/listar_pessoas?pagina=' + (listar_pessoas.lista_de_pessoas.pagina_atual - 1)">Anterior</a>
+            <a v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual > 1" class="pagina_anterior" @click="mudar_pagina" 
+               :href="'/listar_pessoas?pagina=' + (vue_listar_pessoas.lista_de_pessoas.pagina_atual - 1)">Anterior</a>
             <a v-else class="pagina_anterior" href="/listar_pessoas?pagina=1" @click="mudar_pagina">Anterior</a>
             <span>&nbsp;</span>
             <template v-for="pagina in lista_de_paginas">
               <span v-if="pagina === '...'">...</span>
-              <a v-else-if="pagina == listar_pessoas.lista_de_pessoas.pagina_atual" class="pagina_selecionada" 
+              <a v-else-if="pagina == vue_listar_pessoas.lista_de_pessoas.pagina_atual" class="pagina_selecionada" 
                  :href="'/listar_pessoas?pagina=' + pagina" @click="mudar_pagina">{{pagina}}</a>
               <a v-else class="pagina" :href="'/listar_pessoas?pagina=' + pagina" @click="mudar_pagina">{{pagina}}</a>
               <span>&nbsp;</span>
             </template>
-            <a v-if="listar_pessoas.lista_de_pessoas.pagina_atual < listar_pessoas.lista_de_pessoas.ultima_pagina" 
-               :href="'/listar_pessoas?pagina=' + (listar_pessoas.lista_de_pessoas.pagina_atual + 1)" 
+            <a v-if="vue_listar_pessoas.lista_de_pessoas.pagina_atual < vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
+               :href="'/listar_pessoas?pagina=' + (vue_listar_pessoas.lista_de_pessoas.pagina_atual + 1)" 
                class="pagina_seguinte" @click="mudar_pagina">Seguinte</a>
-            <a v-else :href="'/listar_pessoas?pagina=' + listar_pessoas.lista_de_pessoas.ultima_pagina" 
+            <a v-else :href="'/listar_pessoas?pagina=' + vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
                class="pagina_seguinte" @click="mudar_pagina">Seguinte</a>
             <span>&nbsp;</span>
-            <a :href="'/listar_pessoas?pagina=' + listar_pessoas.lista_de_pessoas.ultima_pagina" 
+            <a :href="'/listar_pessoas?pagina=' + vue_listar_pessoas.lista_de_pessoas.ultima_pagina" 
                class="ultima_pagina" @click="mudar_pagina">Última</a>
           </div>
         </div>
