@@ -42,6 +42,13 @@
         mensagem_cadastrar_pessoa: "",
         tipo_da_mensagem_cadastrar_pessoa: null,
         
+        filtro_nome: this.tudo_em_um.lista_de_pessoas.filtro_nome,
+        filtro_cpf: this.tudo_em_um.lista_de_pessoas.filtro_cpf,
+        filtro_data_de_nascimento: this.tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento,
+        filtro_id_do_setor: this.tudo_em_um.lista_de_pessoas.filtro_id_do_setor,
+        quantidade_por_pagina: this.tudo_em_um.lista_de_pessoas.quantidade_por_pagina,
+        ordenacao: this.tudo_em_um.lista_de_pessoas.ordenacao,
+        
         ultimo_valor_do_campo_filtro_cpf: "",
         mostrar_calendario_do_campo_filtro_data_de_nascimento: false,
         status_da_busca: "",
@@ -91,11 +98,11 @@
         }
       }
       if(valor_default_para_a_caixa_de_selecao){
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor = "";
+        this.filtro_id_do_setor = "";
       }
       
       if(Object.keys(this.vue_tudo_em_um.quantidades_por_pagina).indexOf(this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina.toString()) === -1){
-        this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina = "padrao";
+        this.quantidade_por_pagina = "padrao";
       }
       
       this.criar_lista_de_paginas();
@@ -493,6 +500,13 @@
                   this.cadastrar_telefone_movel = "";
                   this.cadastrar_telefone_estrangeiro = "";
                   
+                  this.filtro_nome = "";
+                  this.filtro_cpf = "";
+                  this.filtro_data_de_nascimento = "";
+                  this.filtro_id_do_setor = "";
+                  this.quantidade_por_pagina = "padrao";
+                  this.ordenacao = "padrao";
+                  
                   this.vue_tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
                   this.vue_tudo_em_um.sexos = resposta.sexos;
                   this.vue_tudo_em_um.setores = resposta.setores;
@@ -531,7 +545,7 @@
         this.lista_de_paginas = lista_de_paginas;
       },
       filtrar_por_nome(evento){
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_nome = evento.currentTarget.value;
+        this.filtro_nome = evento.currentTarget.value;
         this.filtrar();
       },
       filtrar_por_cpf(evento){
@@ -540,12 +554,12 @@
         const novo_valor = this.aplicar_mascara_de_cpf(evento, this.ultimo_valor_do_campo_filtro_cpf);
         
         this.ultimo_valor_do_campo_filtro_cpf = novo_valor;
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_cpf = novo_valor;
+        this.filtro_cpf = novo_valor;
         
         this.filtrar();
       },
       filtrar_por_data_de_nascimento(evento){
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento = evento.currentTarget.value;
+        this.filtro_data_de_nascimento = evento.currentTarget.value;
         this.filtrar();
       },
       colocar_borda_hover_no_campo_filtro_data_de_nascimento(evento){
@@ -569,11 +583,11 @@
         }
       },
       filtrar_por_setor(evento){
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor = evento.currentTarget.value;
+        this.filtro_id_do_setor = evento.currentTarget.value;
         this.filtrar();
       },
       mudar_quantidade_por_pagina(evento){
-        this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina = evento.currentTarget.value;
+        this.quantidade_por_pagina = evento.currentTarget.value;
         this.filtrar();
       },
       buscar(evento){
@@ -592,12 +606,12 @@
         
         this.contador_ajax++;
         this.status_da_busca = "Limpando...";
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_nome = "";
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_cpf = "";
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento = "";
-        this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor = "";
-        this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina = "padrao";
-        this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "padrao";
+        this.filtro_nome = "";
+        this.filtro_cpf = "";
+        this.filtro_data_de_nascimento = "";
+        this.filtro_id_do_setor = "";
+        this.quantidade_por_pagina = "padrao";
+        this.ordenacao = "padrao";
         this.pagina_selecionada = 1;
         
         this.enviar_formulario_de_filtro();
@@ -618,15 +632,15 @@
         this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
-        switch(this.vue_tudo_em_um.lista_de_pessoas.ordenacao){
+        switch(this.ordenacao){
           case "nome_completo_a_z":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "nome_completo_z_a";
+            this.ordenacao = "nome_completo_z_a";
             break;
           case "nome_completo_z_a":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "padrao";
+            this.ordenacao = "padrao";
             break;
           default:
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "nome_completo_a_z";
+            this.ordenacao = "nome_completo_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
@@ -635,15 +649,15 @@
         this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
-        switch(this.vue_tudo_em_um.lista_de_pessoas.ordenacao){
+        switch(this.ordenacao){
           case "cpf_crescente":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "cpf_decrescente";
+            this.ordenacao = "cpf_decrescente";
             break;
           case "cpf_decrescente":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "padrao";
+            this.ordenacao = "padrao";
             break;
           default:
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "cpf_crescente";
+            this.ordenacao = "cpf_crescente";
             break;
         }
         this.enviar_formulario_de_filtro();
@@ -652,15 +666,15 @@
         this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
-        switch(this.vue_tudo_em_um.lista_de_pessoas.ordenacao){
+        switch(this.ordenacao){
           case "setor_a_z":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "setor_z_a";
+            this.ordenacao = "setor_z_a";
             break;
           case "setor_z_a":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "padrao";
+            this.ordenacao = "padrao";
             break;
           default:
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "setor_a_z";
+            this.ordenacao = "setor_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
@@ -669,27 +683,27 @@
         this.contador_ajax++;
         this.status_da_busca = "Ordenando...";
         this.pagina_selecionada = 1;
-        switch(this.vue_tudo_em_um.lista_de_pessoas.ordenacao){
+        switch(this.ordenacao){
           case "contato_a_z":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "contato_z_a";
+            this.ordenacao = "contato_z_a";
             break;
           case "contato_z_a":
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "padrao";
+            this.ordenacao = "padrao";
             break;
           default:
-            this.vue_tudo_em_um.lista_de_pessoas.ordenacao = "contato_a_z";
+            this.ordenacao = "contato_a_z";
             break;
         }
         this.enviar_formulario_de_filtro();
       },
       enviar_formulario_de_filtro(){
         const numero_desta_acao_ajax = this.contador_ajax;
-        const filtro_nome = this.vue_tudo_em_um.lista_de_pessoas.filtro_nome;
-        const filtro_cpf = this.vue_tudo_em_um.lista_de_pessoas.filtro_cpf;
-        const filtro_data_de_nascimento = this.vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
-        const filtro_id_do_setor = this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor;
-        const quantidade_por_pagina = this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina;
-        const ordenacao = this.vue_tudo_em_um.lista_de_pessoas.ordenacao;
+        const filtro_nome = this.filtro_nome;
+        const filtro_cpf = this.filtro_cpf;
+        const filtro_data_de_nascimento = this.filtro_data_de_nascimento;
+        const filtro_id_do_setor = this.filtro_id_do_setor;
+        const quantidade_por_pagina = this.quantidade_por_pagina;
+        const ordenacao = this.ordenacao;
         const pagina = this.pagina_selecionada;
         
         /* Requisição ajax */
@@ -785,12 +799,12 @@
         this.tipo_da_mensagem_editar_pessoa = null;
         
         const numero_desta_acao_ajax = this.contador_ajax;
-        const filtro_nome = this.vue_tudo_em_um.lista_de_pessoas.filtro_nome;
-        const filtro_cpf = this.vue_tudo_em_um.lista_de_pessoas.filtro_cpf;
-        const filtro_data_de_nascimento = this.vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
-        const filtro_id_do_setor = this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor;
-        const quantidade_por_pagina = this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina;
-        const ordenacao = this.vue_tudo_em_um.lista_de_pessoas.ordenacao;
+        const filtro_nome = this.filtro_nome;
+        const filtro_cpf = this.filtro_cpf;
+        const filtro_data_de_nascimento = this.filtro_data_de_nascimento;
+        const filtro_id_do_setor = this.filtro_id_do_setor;
+        const quantidade_por_pagina = this.quantidade_por_pagina;
+        const ordenacao = this.ordenacao;
         const pagina = this.pagina_selecionada;
         
         const id_da_pessoa = this.id_da_pessoa_do_popup_editar;
@@ -859,12 +873,12 @@
         this.tipo_da_mensagem_excluir_pessoa = null;
         
         const numero_desta_acao_ajax = this.contador_ajax;
-        const filtro_nome = this.vue_tudo_em_um.lista_de_pessoas.filtro_nome;
-        const filtro_cpf = this.vue_tudo_em_um.lista_de_pessoas.filtro_cpf;
-        const filtro_data_de_nascimento = this.vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento;
-        const filtro_id_do_setor = this.vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor;
-        const quantidade_por_pagina = this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina;
-        const ordenacao = this.vue_tudo_em_um.lista_de_pessoas.ordenacao;
+        const filtro_nome = this.filtro_nome;
+        const filtro_cpf = this.filtro_cpf;
+        const filtro_data_de_nascimento = this.filtro_data_de_nascimento;
+        const filtro_id_do_setor = this.filtro_id_do_setor;
+        const quantidade_por_pagina = this.quantidade_por_pagina;
+        const ordenacao = this.ordenacao;
         const pagina = this.pagina_selecionada;
         
         const id_da_pessoa = this.id_da_pessoa_do_popup_excluir;
@@ -1512,7 +1526,7 @@
             </div>
             <div id="div_campo_filtro_nome">
               <input type="text" id="campo_filtro_nome" name="filtro_nome" autocomplete="off" @input="filtrar_por_nome" 
-                     :value="vue_tudo_em_um.lista_de_pessoas.filtro_nome" placeholder="Parte do nome"/>
+                     :value="filtro_nome" placeholder="Parte do nome"/>
             </div>
           </div>
           <div id="div_filtro_cpf">
@@ -1523,7 +1537,7 @@
             </div>
             <div id="div_campo_filtro_cpf">
               <input type="text" id="campo_filtro_cpf" name="filtro_cpf" autocomplete="off" @input="filtrar_por_cpf" 
-                     :value="vue_tudo_em_um.lista_de_pessoas.filtro_cpf" placeholder="CPF completo"/>
+                     :value="filtro_cpf" placeholder="CPF completo"/>
             </div>
           </div>
           <div id="div_filtro_data_de_nascimento">
@@ -1537,7 +1551,7 @@
                      autocomplete="off" placeholder="dia/mês/ano" @input="filtrar_por_data_de_nascimento" 
                      @mouseenter="colocar_borda_hover_no_campo_filtro_data_de_nascimento" 
                      @mouseleave="colocar_borda_normal_no_campo_filtro_data_de_nascimento" 
-                     :value="vue_tudo_em_um.lista_de_pessoas.filtro_data_de_nascimento"/>
+                     :value="filtro_data_de_nascimento"/>
               <span id="span_icone_de_calendario_do_campo_filtro_data_de_nascimento" 
                     @mouseenter="colocar_borda_hover_no_campo_filtro_data_de_nascimento" 
                     @mouseleave="colocar_borda_normal_no_campo_filtro_data_de_nascimento" 
@@ -1555,7 +1569,7 @@
             </div>
             <div id="div_caixa_de_selecao_filtro_setor">
               <select id="caixa_de_selecao_filtro_setor" name="filtro_id_do_setor" autocomplete="off" 
-                      @change="filtrar_por_setor" :value="vue_tudo_em_um.lista_de_pessoas.filtro_id_do_setor">
+                      @change="filtrar_por_setor" :value="filtro_id_do_setor">
                 <option value="">Selecione</option>
                 <option v-for="(setor, chave) in vue_tudo_em_um.setores" :value="setor.id">{{setor.nome}}</option>
               </select>
@@ -1569,14 +1583,14 @@
             </div>
             <div id="div_caixa_de_selecao_quantidade_por_pagina">
               <select id="caixa_de_selecao_quantidade_por_pagina" name="quantidade_por_pagina" autocomplete="off" 
-                      @change="mudar_quantidade_por_pagina" :value="vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina">
+                      @change="mudar_quantidade_por_pagina" :value="quantidade_por_pagina">
                 <option value="padrao">Selecione</option>
                 <option v-for="(valor, chave) in vue_tudo_em_um.quantidades_por_pagina" :value="chave">{{valor}}</option>
               </select>
             </div>
           </div>
           <div id="div_botoes_dos_filtros">
-            <input type="hidden" id="campo_ordenacao" name="ordenacao" :value="vue_tudo_em_um.lista_de_pessoas.ordenacao"/>
+            <input type="hidden" id="campo_ordenacao" name="ordenacao" :value="ordenacao"/>
             <button type="button" id="botao_buscar" @mouseleave="remover_foco_do_botao" @click="buscar">Buscar</button>
             <button type="button" id="botao_limpar" @mouseleave="remover_foco_do_botao" @click="limpar">Limpar</button>
           </div>
