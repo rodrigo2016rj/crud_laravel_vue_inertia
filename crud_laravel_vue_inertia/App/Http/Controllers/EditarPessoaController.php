@@ -255,7 +255,7 @@ final class EditarPessoaController extends TemplateLayoutController{
 
     $nome_completo = $pessoa->nome_completo();
     $array_resultado = $editar_pessoa_model->verificar_disponibilidade_de_nome_completo($nome_completo,
-      $id_da_pessoa);
+    $id_da_pessoa);
     if(isset($array_resultado['mensagem_do_model'])){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' '.$array_resultado['mensagem_do_model'];
@@ -355,7 +355,7 @@ final class EditarPessoaController extends TemplateLayoutController{
     }
     $pessoa->set_sexo($sexo);
 
-    if($id_do_setor === '' or $id_do_setor === null){
+    if($id_do_setor === 'selecione' or $id_do_setor === '' or $id_do_setor === null){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' Você precisa selecionar um setor para poder editar a pessoa.';
       $sessao->put('mensagem_da_pagina_editar_pessoa', $mensagem);

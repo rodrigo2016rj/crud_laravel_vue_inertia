@@ -278,7 +278,7 @@ final class CadastrarPessoaController extends TemplateLayoutController{
     }
     $pessoa->set_sexo($sexo);
 
-    if($id_do_setor === '' or $id_do_setor === null){
+    if($id_do_setor === 'selecione' or $id_do_setor === '' or $id_do_setor === null){
       $mensagem = 'A pessoa não foi cadastrada.';
       $mensagem .= ' Você precisa selecionar um setor para poder cadastrar a pessoa.';
       $sessao->put('mensagem_da_pagina_cadastrar_pessoa', $mensagem);

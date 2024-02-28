@@ -92,7 +92,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $valores['filtro_data_de_nascimento'] = $filtro_data_de_nascimento;
 
     $filtro_id_do_setor = $requisicao->$metodo('filtro_id_do_setor') ?? '';
-    if($filtro_id_do_setor !== ''){
+    if($filtro_id_do_setor !== '' and $filtro_id_do_setor !== 'selecione'){
       $filtros['id_do_setor'] = $filtro_id_do_setor;
     }
     $valores['filtro_id_do_setor'] = $filtro_id_do_setor;

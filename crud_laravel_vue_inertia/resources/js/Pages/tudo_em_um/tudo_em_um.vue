@@ -98,7 +98,7 @@
         }
       }
       if(valor_default_para_a_caixa_de_selecao){
-        this.filtro_id_do_setor = "";
+        this.filtro_id_do_setor = "selecione";
       }
       
       if(Object.keys(this.vue_tudo_em_um.quantidades_por_pagina).indexOf(this.vue_tudo_em_um.lista_de_pessoas.quantidade_por_pagina.toString()) === -1){
@@ -468,9 +468,9 @@
         const tipo = "POST";
         let url_mais = "";
         let url = "/tudo_em_um/cadastrar_pessoa_ajax" + url_mais;
-        let dados_post = {filtro_nome: "", filtro_cpf: "", filtro_data_de_nascimento: "", filtro_id_do_setor: "",
-                          quantidade_por_pagina: "", ordenacao: null, nome: this.cadastrar_nome, 
-                          sobrenome: this.cadastrar_sobrenome, cpf: this.cadastrar_cpf, 
+        let dados_post = {filtro_nome: "", filtro_cpf: "", filtro_data_de_nascimento: "", 
+                          filtro_id_do_setor: "selecione", quantidade_por_pagina: "", ordenacao: null, 
+                          nome: this.cadastrar_nome, sobrenome: this.cadastrar_sobrenome, cpf: this.cadastrar_cpf, 
                           data_de_nascimento: this.cadastrar_data_de_nascimento, sexo: this.cadastrar_sexo,
                           id_do_setor: this.cadastrar_setor, email: this.cadastrar_email, 
                           telefone_fixo: this.cadastrar_telefone_fixo, telefone_movel: this.cadastrar_telefone_movel, 
@@ -503,7 +503,7 @@
                   this.filtro_nome = "";
                   this.filtro_cpf = "";
                   this.filtro_data_de_nascimento = "";
-                  this.filtro_id_do_setor = "";
+                  this.filtro_id_do_setor = "selecione";
                   this.quantidade_por_pagina = "padrao";
                   this.ordenacao = "padrao";
                   
@@ -609,7 +609,7 @@
         this.filtro_nome = "";
         this.filtro_cpf = "";
         this.filtro_data_de_nascimento = "";
-        this.filtro_id_do_setor = "";
+        this.filtro_id_do_setor = "selecione";
         this.quantidade_por_pagina = "padrao";
         this.ordenacao = "padrao";
         this.pagina_selecionada = 1;
@@ -1570,7 +1570,7 @@
             <div id="div_caixa_de_selecao_filtro_setor">
               <select id="caixa_de_selecao_filtro_setor" name="filtro_id_do_setor" autocomplete="off" 
                       @change="filtrar_por_setor" :value="filtro_id_do_setor">
-                <option value="">Selecione</option>
+                <option value="selecione">Selecione</option>
                 <option v-for="(setor, chave) in vue_tudo_em_um.setores" :value="setor.id">{{setor.nome}}</option>
               </select>
             </div>
