@@ -42,7 +42,7 @@
         }
       }
       if(valor_default_para_a_caixa_de_selecao){
-        this.vue_cadastrar_pessoa.id_do_setor = "selecione";
+        this.vue_cadastrar_pessoa.id_do_setor = "";
       }
       
       window.addEventListener("click", function(evento){
@@ -535,7 +535,7 @@
             <div id="div_caixa_de_selecao_setor">
               <select id="caixa_de_selecao_setor" name="id_do_setor" v-model="vue_cadastrar_pessoa.id_do_setor" 
                       @change="colocar_popup" autocomplete="off">
-                <option value="selecione">Selecione</option>
+                <option value="">Selecione</option>
                 <option v-for="(setor, chave) in vue_cadastrar_pessoa.setores" :value="setor.id">{{setor.nome}}</option>
               </select>
               <div id="div_descricoes_dos_setores" class="tag_oculta">

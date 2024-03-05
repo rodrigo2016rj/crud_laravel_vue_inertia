@@ -92,7 +92,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $valores['filtro_data_de_nascimento'] = $filtro_data_de_nascimento;
 
     $filtro_id_do_setor = $requisicao->$metodo('filtro_id_do_setor') ?? '';
-    if($filtro_id_do_setor !== '' and $filtro_id_do_setor !== 'selecione'){
+    if($filtro_id_do_setor !== ''){
       $filtros['id_do_setor'] = $filtro_id_do_setor;
     }
     $valores['filtro_id_do_setor'] = $filtro_id_do_setor;
@@ -148,8 +148,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     if($pagina < 1){
       $pagina = 1;
     }
-    $quantidade_de_paginas = $this->calcular_quantidade_de_paginas_da_lista_de_pessoas($filtros,
-      $quantidade_por_pagina);
+    $quantidade_de_paginas = $this->calcular_quantidade_de_paginas_da_lista_de_pessoas($filtros, $quantidade_por_pagina);
     if($pagina > $quantidade_de_paginas){
       $pagina = $quantidade_de_paginas;
     }
@@ -161,8 +160,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $descartar = $descartar >= 0 ? $descartar : 0;
 
     /* Preparando o resultado */
-    $pessoas = $tudo_em_um_model->selecionar_pessoas($filtros, $ordenacao, $quantidade_por_pagina,
-      $descartar);
+    $pessoas = $tudo_em_um_model->selecionar_pessoas($filtros, $ordenacao, $quantidade_por_pagina, $descartar);
     $array_pessoas = array();
     foreach($pessoas as $pessoa){
       $array_pessoa = array();
@@ -658,8 +656,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     $pessoa->set_sobrenome($sobrenome);
 
     $nome_completo = $pessoa->nome_completo();
-    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_nome_completo_para_editar($nome_completo,
-      $id_da_pessoa);
+    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_nome_completo_para_editar($nome_completo, $id_da_pessoa);
     if(isset($array_resultado['mensagem_do_model'])){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' '.$array_resultado['mensagem_do_model'];
@@ -675,8 +672,7 @@ final class TudoEmUmController extends TemplateLayoutController{
       echo(json_encode($retorno));
       die;
     }
-    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_cpf_para_editar($cpf,
-      $id_da_pessoa);
+    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_cpf_para_editar($cpf, $id_da_pessoa);
     if(isset($array_resultado['mensagem_do_model'])){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' '.$array_resultado['mensagem_do_model'];
@@ -796,8 +792,7 @@ final class TudoEmUmController extends TemplateLayoutController{
       echo(json_encode($retorno));
       die;
     }
-    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_email_para_editar($email,
-      $id_da_pessoa);
+    $array_resultado = $tudo_em_um_model->verificar_disponibilidade_de_email_para_editar($email, $id_da_pessoa);
     if(isset($array_resultado['mensagem_do_model'])){
       $mensagem = 'A pessoa não foi editada.';
       $mensagem .= ' '.$array_resultado['mensagem_do_model'];
