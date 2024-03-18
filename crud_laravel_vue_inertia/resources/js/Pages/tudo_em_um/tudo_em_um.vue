@@ -469,7 +469,7 @@
         let url_mais = "";
         let url = "/tudo_em_um/cadastrar_pessoa_ajax" + url_mais;
         let dados_post = {filtro_nome: "", filtro_cpf: "", filtro_data_de_nascimento: "", filtro_id_do_setor: "",
-                          quantidade_por_pagina: "", ordenacao: null, nome: this.cadastrar_nome, 
+                          quantidade_por_pagina: "", ordenacao: null, pagina: 1, nome: this.cadastrar_nome, 
                           sobrenome: this.cadastrar_sobrenome, cpf: this.cadastrar_cpf, 
                           data_de_nascimento: this.cadastrar_data_de_nascimento, sexo: this.cadastrar_sexo,
                           id_do_setor: this.cadastrar_setor, email: this.cadastrar_email, 
@@ -510,6 +510,8 @@
                   this.vue_tudo_em_um.lista_de_pessoas = resposta.lista_de_pessoas;
                   this.vue_tudo_em_um.sexos = resposta.sexos;
                   this.vue_tudo_em_um.setores = resposta.setores;
+                  
+                  this.pagina_selecionada = 1;
                   
                   this.criar_lista_de_paginas();
                 }
