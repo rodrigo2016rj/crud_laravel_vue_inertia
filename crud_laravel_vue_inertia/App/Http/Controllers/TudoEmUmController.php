@@ -882,7 +882,7 @@ final class TudoEmUmController extends TemplateLayoutController{
 
     /* Validações */
     if(!is_numeric($id_da_pessoa) or $id_da_pessoa <= 0 or floor($id_da_pessoa) != $id_da_pessoa){
-      $mensagem = 'A pessoa não foi excluida.';
+      $mensagem = 'A pessoa não foi excluída.';
       $mensagem .= ' O ID da pessoa precisa ser um número natural maior que zero.';
       $retorno['mensagem_de_falha'] = $mensagem;
       echo(json_encode($retorno));
@@ -890,7 +890,7 @@ final class TudoEmUmController extends TemplateLayoutController{
     }
     $array_resultado = $tudo_em_um_model->selecionar_pessoa($id_da_pessoa);
     if(isset($array_resultado['mensagem_do_model'])){
-      $mensagem = 'A pessoa não foi excluida.';
+      $mensagem = 'A pessoa não foi excluída.';
       $mensagem .= " {$array_resultado['mensagem_do_model']}";
       $retorno['mensagem_de_falha'] = $mensagem;
       echo(json_encode($retorno));
@@ -899,7 +899,7 @@ final class TudoEmUmController extends TemplateLayoutController{
 
     /* Excluir pessoa do banco de dados */
     $tudo_em_um_model->deletar_pessoa($id_da_pessoa);
-    $mensagem = 'A pessoa foi excluida com sucesso.';
+    $mensagem = 'A pessoa foi excluída com sucesso.';
     $this->mostrar_pessoas_ajax($mensagem);
   }
 
